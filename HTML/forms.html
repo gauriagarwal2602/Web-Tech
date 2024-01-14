@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Forms</title>
+</head>
+<body>
+    <from method="get">
+        <h1>Payment Form</h1>
+        <h2> Contact Info</h2>
+        <p>Name: <input type="text" name="name" required></p>
+        <fieldset>
+        <p>
+            Gender: <br>
+            <!-- <legend>Gender:</legend> -->
+            
+            Male <input type="radio" name="gender" id=""><br>
+            Female <input type="radio" name="gender" id="">
+        </p>
+    </fieldset>
+    <p>Address: <br>
+        <textarea name="Address" id="Address" cols="30" rows="10"></textarea></p>
+        <p>
+            Email: <br>
+            <input type="email" name="email" id="email">
+        </p>
+        <p>
+            <h4>Select your city:</h4>
+            <select name="city" id="city">
+                <option value="">--Select a city--</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Gurgaon">Gurgaon</option>
+                <option value="Paris">Paris</option>
+            </select>
+        </p>
+        <p>
+            DOB: <input type="date" name="DOB" id="DOB">
+        </p>
+        <p>
+            Password: <input type="password" name="pass" id="pas">
+        </p>
+        <input type="submit" value="submit">
+        <input type="hidden" name="Submit">
+    </from>
+</body>
+</html>
