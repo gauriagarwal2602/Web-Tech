@@ -1,0 +1,199 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+nav{
+    height: 10vh;
+    background-color: #ffcab0;
+    display: flex;
+
+}
+#logo{
+    height: 10vh;
+}
+#searchTxt{
+    position: absolute;
+    right: 1%;
+    cursor: text;
+    border: 2px solid transparent;
+    width: 15em;
+    height: 2.5em;
+    padding-left: 0.8em;
+    outline: none;
+    overflow: hidden;
+    background-color: #F3F3F3;
+    border-radius: 10px;
+    transition: all 0.5s;
+}
+#searchTxt:focus,
+#searchTxt:hover {
+    border: 2px solid #4A9DEC;
+    box-shadow: 2px 2px 2px 5px rgba(61, 135, 204, 0.2);
+    background-color: white;
+  }
+.content{
+    display: flex;
+    flex-direction: row;
+}
+.left{
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #e0ffcd;
+}
+.right{
+    width: 75vw;
+    background-color: #fdffcd;
+}
+.container_clock{
+    padding: 5px;
+    position: relative;
+    height: 17vw;
+    width: 17vw;
+    margin: 20px 0px 20px 0px;
+    background-image: url(/PROJECT/clock.jpg);
+    background-size: cover;
+    left: 14%;
+  }
+  
+  #hours{
+    position: absolute;
+    height: 24%;
+    width: 3%;
+    background-color: black;
+    left: 48.85%;
+    top: 26%;
+    border-radius: 30px;
+    transform-origin: bottom;
+  }
+  
+  #minute{
+    position:absolute;
+    height: 34%;
+    width: 2%;
+    background-color:black;
+    left: 49.40%;
+    top: 16%;
+    border-radius: 30px;
+    transform-origin: bottom;
+  }
+  
+  #second{
+    position: absolute;
+    height: 42%;
+    width: 1%;
+    background-color:red;
+    left: 50%;
+    top: 8%;
+    border-radius: 30px;
+    transform-origin: bottom;
+  }
+.cal{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  .wrapper{
+    width: 23vw;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  }
+  .wrapper header{
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+  }
+  header .icons{
+    display: flex;
+  }
+  header .icons span{
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #878787;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.9rem;
+    user-select: none;
+    border-radius: 50%;
+  }
+  .icons span:last-child{
+    margin-right: -10px;
+  }
+  header .icons span:hover{
+    background: #f2f2f2;
+  }
+  header .current-date{
+    font-size: 1.45rem;
+    font-weight: 500;
+  }
+  .calendar{
+    padding: 20px;
+  }
+  .calendar ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    text-align: center;
+  }
+  .calendar .days{
+    margin-bottom: 20px;
+  }
+  .calendar li{
+    color: #333;
+    width: calc(100% / 7);
+    font-size: 1.07rem;
+  }
+  .calendar .weeks li{
+    font-weight: 500;
+    cursor: default;
+  }
+  .calendar .days li{
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+    margin-top: 30px;
+  }
+  .days li.inactive{
+    color: #aaa;
+  }
+  .days li.active{
+    color: #fff;
+  }
+  .days li::before{
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: -1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .days li.active::before{
+    background: #A8C697;
+  }
+  .days li:not(.active):hover::before{
+    background: #f2f2f2;
+  }
+  .btn{
+    background-color:#A8C697 ;
+    border: none;
+    width: 50px;
+    height: 50px;
+    margin: 0px 0px 0px 10px;
+    border-radius: 25px;
+  }
+  .btn:hover,
+  .btn:focus{
+    background-color: #7DAE91;
+  }
+  #clock {
+    font-size: 5.5em;
+  }
