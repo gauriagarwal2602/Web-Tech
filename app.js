@@ -147,14 +147,14 @@ search.addEventListener("input", function () {
     let noteCards = document.getElementsByClassName('noteCard');
     Array.from(noteCards).forEach(function (element) {
         let cardTxt = element.getElementsByTagName("p")[0].innerText;
-        let highlightedText = cardTxt.replace(new RegExp(inputVal, 'gi'), (match) => `<mark>${match}</mark>`);
-        element.getElementsByTagName("p")[0].innerHTML = highlightedText
-        if (cardTxt.toLocaleLowerCase.includes(inputVal)) {
+        let highlightedText = cardTxt.replace(new RegExp(inputVal, 'gi'), (match) => `<span style="background-color: #ffcab0;">${match}</span>`);
+        element.getElementsByTagName("p")[0].innerHTML = highlightedText;
+
+        if (cardTxt.includes(inputVal)) {
             element.style.display = "block";
-        }
-        else {
+        } else {
             element.style.display = "none";
-        }
+        }      
     })
 })
 const daysTag = document.querySelector(".days"),
@@ -216,7 +216,7 @@ daysTag.addEventListener("mouseover", (event) => {
     if (element.classList.contains("holiday")) {
       const holidayName = element.dataset.holiday;
       // Display holidayName in a text box or tooltip
-      console.log("Holiday:", holidayName); // Replace with your display logic
+      console.log("Holiday:", holidayName); 
     }
   });
   
