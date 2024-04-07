@@ -33,7 +33,7 @@ function updateClock() {
         return;
     }
     if (notesObj.length >= 25) {
-        alert("You can only add up to 5 notes.");
+        alert("You can only add up to 25 notes.");
         addTxt.value = "";
         return;
     }
