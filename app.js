@@ -1,23 +1,23 @@
- console.log("Welcome to notes app. This is app.js");
+console.log("Welcome to notes app. This is app.js");
 showNotes();
 function updateClock() {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
-  
+
     const clockDisplay = `${hours}:${minutes}:${seconds}`;
     document.getElementById('clock').innerText = clockDisplay;
-  }
-  
-  function updateClockEverySecond() {
+}
+
+function updateClockEverySecond() {
     updateClock();
     setInterval(updateClock, 1000);
-  }
-  
-  updateClockEverySecond();
-    let isEditing=false;
-    function addNote() {
+}
+
+updateClockEverySecond();
+let isEditing = false;
+function addNote() {
     if (isEditing) {
         return;
     }
@@ -33,7 +33,7 @@ function updateClock() {
         return;
     }
     if (notesObj.length >= 25) {
-        alert("You can only add up to 25 notes.");
+        alert("You can only add up to 5 notes.");
         addTxt.value = "";
         return;
     }
@@ -41,7 +41,7 @@ function updateClock() {
     if (existingNote) {
         alert("This note already exists.");
         addTxt.value = "";
-        return; 
+        return;
     }
     let newNote = {
         text: addTxt.value,
@@ -66,13 +66,13 @@ function editNote(timestamp) {
         document.getElementById("addTxt").value = text;
         document.getElementById("addBtn").innerHTML = `<span class="material-symbols-outlined">upgrade</span>`;
         // innerText = "Save Changes";
-        isEditing= true;
+        isEditing = true;
         document.getElementById("addBtn").addEventListener("click", function saveChanges() {
             const updatedText = document.getElementById("addTxt").value;
             const newTimestamp = new Date().toLocaleString();
             notesObj[editIndex].text = updatedText;
             notesObj[editIndex].timestamp = newTimestamp;
-            
+
             localStorage.setItem("notes", JSON.stringify(notesObj));
             document.getElementById("addTxt").value = "";
             document.getElementById("addBtn").innerHTML = `<span class="material-symbols-outlined">
@@ -97,8 +97,9 @@ function showNotes() {
     notesObj.sort((a, b) => {
         return new Date(b.timestamp) - new Date(a.timestamp);
     });
+    const latestNotes = notesObj.slice(0, 25);
     let html = "";
-    notesObj.forEach(function (element, index) {
+    latestNotes.forEach(function (element, index) {
         html += `
                     <div class="noteCard my-2 mx-2 card card" style="width: 18rem;">
                         <div class="card-body">
@@ -115,7 +116,7 @@ function showNotes() {
                     </div>`;
     });
     let notesElm = document.getElementById("notes");
-    if (notesObj.length != 0) {
+    if (latestNotes.length != 0) {
         notesElm.innerHTML = html;
     } else {
         notesElm.innerHTML = `Nothing to show! Use "Add a Note" section above to add notes.`;
@@ -141,66 +142,97 @@ function deleteNote(timestamp) {
 }
 
 let search = document.getElementById('searchTxt');
-search.addEventListener("input", function(){
-
+search.addEventListener("input", function () {
     let inputVal = search.value.toLowerCase();
     let noteCards = document.getElementsByClassName('noteCard');
-    Array.from(noteCards).forEach(function(element){
+    Array.from(noteCards).forEach(function (element) {
         let cardTxt = element.getElementsByTagName("p")[0].innerText;
-        if(cardTxt.includes(inputVal)){
+        let highlightedText = cardTxt.replace(new RegExp(inputVal, 'gi'), (match) => `<mark>${match}</mark>`);
+        element.getElementsByTagName("p")[0].innerHTML = highlightedText
+        if (cardTxt.toLocaleLowerCase.includes(inputVal)) {
             element.style.display = "block";
         }
-        else{
+        else {
             element.style.display = "none";
         }
     })
 })
 const daysTag = document.querySelector(".days"),
-currentDate = document.querySelector(".current-date"),
-prevNextIcon = document.querySelectorAll(".icons span");
+    currentDate = document.querySelector(".current-date"),
+    prevNextIcon = document.querySelectorAll(".icons span");
 
 let date = new Date(),
-currYear = date.getFullYear(),
-currMonth = date.getMonth();
+    currYear = date.getFullYear(),
+    currMonth = date.getMonth();
 
 const months = ["January", "February", "March", "April", "May", "June", "July",
-              "August", "September", "October", "November", "December"];
-
-const renderCalendar = () => {
-    let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), 
-    lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), 
-    lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(),
-    lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); 
+    "August", "September", "October", "November", "December"];
+const apiKey = "LXAwVXQtB6STqG4Vd9KL2KkRglsJMBt2";
+async function fetchHolidays(year, month) {
+    const response = await fetch(`https://calendarific.com/api/v2/holidays?api_key=${apiKey}&country=IN&year=${year}&month=${month}`);
+    const data = await response.json();
+    return data.response.holidays;
+}
+async function renderCalendar(){
+    let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
+        lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(),
+        lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(),
+        lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
     let liTag = "";
-
-    for (let i = firstDayofMonth; i > 0; i--) { 
+    for (let i = firstDayofMonth; i > 0; i--) {
         liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
     }
-
-    for (let i = 1; i <= lastDateofMonth; i++) { 
-        let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
-                     && currYear === new Date().getFullYear() ? "active" : "";
-        liTag += `<li class="${isToday}">${i}</li>`;
+    const holidays = await fetchHolidays(currYear, currMonth + 1);
+    for (let i = 1; i <= lastDateofMonth; i++) {
+        let isToday = i === date.getDate() && currMonth === new Date().getMonth()
+            && currYear === new Date().getFullYear() ? "active" : "";
+        let isHoliday = false;
+        let holidayName = "";
+        const holiday = holidays.find(h =>{
+            const holidayDate = new Date(h.date.iso);
+            return holidayDate.getFullYear() === currYear &&
+                   holidayDate.getMonth() === currMonth &&
+                   holidayDate.getDate() === i;
+        });
+        if (holiday) {
+            isHoliday = true;
+            holidayName = holiday.name;
+        }
+        liTag += `<li class="${isToday} ${isHoliday ? 'holiday' : ''}">
+                      ${i}
+                      <div class="holiday-name">${holidayName}</div>
+                  </li>`;
     }
 
-    for (let i = lastDayofMonth; i < 6; i++) { 
+    for (let i = lastDayofMonth; i < 6; i++) {
         liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`
     }
-    currentDate.innerText = `${months[currMonth]} ${currYear}`;    
+    currentDate.innerText = `${months[currMonth]} ${currYear}`;
     daysTag.innerHTML = liTag;
 }
 renderCalendar();
-
-prevNextIcon.forEach(icon => {     
-    icon.addEventListener("click", () => { 
+daysTag.addEventListener("mouseover", (event) => {
+    const element = event.target;
+    if (element.classList.contains("holiday")) {
+      const holidayName = element.dataset.holiday;
+      // Display holidayName in a text box or tooltip
+      console.log("Holiday:", holidayName); // Replace with your display logic
+    }
+  });
+  
+  daysTag.addEventListener("mouseout", (event) => {
+    // Hide the text box or tooltip
+  });
+prevNextIcon.forEach(icon => {
+    icon.addEventListener("click", () => {
         currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
 
-        if(currMonth < 0 || currMonth > 11) { 
+        if (currMonth < 0 || currMonth > 11) {
             date = new Date(currYear, currMonth, new Date().getDate());
             currYear = date.getFullYear();
-            currMonth = date.getMonth(); 
+            currMonth = date.getMonth();
         } else {
-            date = new Date(); 
+            date = new Date();
         }
         renderCalendar();
     });

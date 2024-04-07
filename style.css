@@ -175,6 +175,7 @@ nav{
     z-index: -1;
     border-radius: 50%;
     transform: translate(-50%, -50%);
+    background-color: transparent;
   }
   .days li.active::before{
     background: #A8C697;
@@ -182,6 +183,33 @@ nav{
   .days li:not(.active):hover::before{
     background: #f2f2f2;
   }
+  .days li.holiday {
+      color: #D44D5C; /* Example color: red */
+  }
+  
+  .days li.holiday::before {
+      background-color: #F8E8E9; /* Example color: light red */
+  }
+  .holiday-name {
+    font-size: 0.8rem;
+    color: #555;
+  }
+  .days li .holiday-name {
+    position: absolute;
+    bottom: -20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: #D44D5C;
+    white-space: nowrap; /* Prevent wrapping */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .days li:hover .holiday-name {
+    opacity: 1;
+  }
+  
   .btn{
     background-color:#A8C697 ;
     border: none;
