@@ -22,6 +22,7 @@ function addNote() {
         return;
     }
     let addTxt = document.getElementById("addTxt");
+    let reminderDateInput = document.getElementById("reminderDate");
     let notes = localStorage.getItem("notes");
     let timestamp = new Date().toLocaleString();
     if (notes == null) {
@@ -45,11 +46,13 @@ function addNote() {
     }
     let newNote = {
         text: addTxt.value,
-        timestamp: timestamp
+        timestamp: timestamp,
+        reminderDate: reminderDateInput.value
     };
     notesObj.push(newNote);
     localStorage.setItem("notes", JSON.stringify(notesObj));
     addTxt.value = "";
+    reminderDateInput.value = "";
     console.log(notesObj);
     showNotes();
 }
@@ -99,13 +102,16 @@ function showNotes() {
     });
     const latestNotes = notesObj.slice(0, 25);
     let html = "";
+    const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
     latestNotes.forEach(function (element, index) {
+        let reminderDateDisplay = element.reminderDate ? `<p class="card-text">Due On: ${element.reminderDate}</p>` : ""; // Display reminder date if available
         html += `
                     <div class="noteCard my-2 mx-2 card card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title"><center>Note ${index + 1}</center></h5>
                             <p class="card-text">${element.text}</p> 
                             <p class="card-text">Added On: ${element.timestamp}</p>
+                            ${reminderDateDisplay}
                             <button id="${index}" onclick="deleteNote('${element.timestamp}')" class="btn btn-primary"><span class="material-symbols-outlined">
                             delete
                             </span></button>
@@ -114,6 +120,9 @@ function showNotes() {
                             </span></button>
                         </div>
                     </div>`;
+            if (element.reminderDate === currentDate) {
+                alert(`Reminder: ${element.text}`);
+           }
     });
     let notesElm = document.getElementById("notes");
     if (latestNotes.length != 0) {
@@ -154,7 +163,7 @@ search.addEventListener("input", function () {
             element.style.display = "block";
         } else {
             element.style.display = "none";
-        }      
+        }
     })
 })
 const daysTag = document.querySelector(".days"),
@@ -173,7 +182,7 @@ async function fetchHolidays(year, month) {
     const data = await response.json();
     return data.response.holidays;
 }
-async function renderCalendar(){
+async function renderCalendar() {
     let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(),
         lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(),
         lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(),
@@ -188,11 +197,11 @@ async function renderCalendar(){
             && currYear === new Date().getFullYear() ? "active" : "";
         let isHoliday = false;
         let holidayName = "";
-        const holiday = holidays.find(h =>{
+        const holiday = holidays.find(h => {
             const holidayDate = new Date(h.date.iso);
             return holidayDate.getFullYear() === currYear &&
-                   holidayDate.getMonth() === currMonth &&
-                   holidayDate.getDate() === i;
+                holidayDate.getMonth() === currMonth &&
+                holidayDate.getDate() === i;
         });
         if (holiday) {
             isHoliday = true;
@@ -214,15 +223,15 @@ renderCalendar();
 daysTag.addEventListener("mouseover", (event) => {
     const element = event.target;
     if (element.classList.contains("holiday")) {
-      const holidayName = element.dataset.holiday;
-      // Display holidayName in a text box or tooltip
-      console.log("Holiday:", holidayName); 
+        const holidayName = element.dataset.holiday;
+        // Display holidayName in a text box or tooltip
+        console.log("Holiday:", holidayName);
     }
-  });
-  
-  daysTag.addEventListener("mouseout", (event) => {
+});
+
+daysTag.addEventListener("mouseout", (event) => {
     // Hide the text box or tooltip
-  });
+});
 prevNextIcon.forEach(icon => {
     icon.addEventListener("click", () => {
         currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
