@@ -32,6 +32,11 @@ function updateClock() {
     if (addTxt.value.trim() === "") {
         return;
     }
+    if (notesObj.length >= 25) {
+        alert("You can only add up to 5 notes.");
+        addTxt.value = "";
+        return;
+    }
     const existingNote = notesObj.find(note => note.text.trim() === addTxt.value.trim());
     if (existingNote) {
         alert("This note already exists.");
