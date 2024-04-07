@@ -47,7 +47,7 @@ function addNote() {
     let newNote = {
         text: addTxt.value,
         timestamp: timestamp,
-        reminderDate: reminderDateInput.value
+        reminderDate:reminderDateInput.value ?reminderDateInput.value : null 
     };
     notesObj.push(newNote);
     localStorage.setItem("notes", JSON.stringify(notesObj));
@@ -103,45 +103,61 @@ function showNotes() {
     let html = "";
     const currentDate = new Date().toISOString().slice(0, 10);
     latestNotes.forEach(function (element, index) {
-        let reminderDateDisplay = element.reminderDate ? `<p class="card-text">Due On: ${element.reminderDate}</p>` : ""; 
-        html += `
-                    <div class="noteCard my-2 mx-2 card card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title"><center>Note ${index + 1}</center></h5>
-                            <div class="note-text-container">
-                            <p class="card-text">${element.text}</p> 
-                            </div>
-                            <br>
-                            <p class="card-text">Added On: ${element.timestamp}</p>
-                            ${reminderDateDisplay}
-                            <button id="${index}" onclick="deleteNote('${element.timestamp}')" class="btn btn-primary"><span class="material-symbols-outlined">
-                            delete
-                            </span></button>
-                            <button id="${index}" onclick="editNote('${element.timestamp}')" class="btn btn-secondary"><span class="material-symbols-outlined">
-                            edit
-                            </span></button>
-                        </div>
-                    </div>`;
+            let reminderDateDisplay = element.reminderDate ? `<p class="card-text">Due On: ${element.reminderDate}</p>` : ""; 
+            let reminderDate = new Date(element.reminderDate);
+            let reminderMonth = reminderDate.getMonth() + 1; // Adding 1 because getMonth() returns zero-based month index
+            let reminderDateOfMonth = reminderDate.getDate();
             if (element.reminderDate === currentDate) {
-                const popup = document.createElement('div');
-            popup.classList.add('popup');
-            popup.innerHTML = `
-                <p>Reminder:</p>
-                <p>${element.text}</p>
-                <button class="close-popup"><span class="material-symbols-outlined">
-                close
-                </span></button>
-            `;
-            document.body.appendChild(popup);
-            const closeButtons = document.querySelectorAll('.close-popup1');
-            closeButtons.forEach(closeButton => {
-            closeButton.addEventListener('click', () => {
-            closeButton.parentElement.style.display = 'none';
-            location. reload()
-        });
-    });
-           }
-
+                if (element.reminderDate === currentDate) {
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.innerHTML = `
+                      <p>Note ${index + 1} (Due Today!)</p>
+                      <p>Note:-${element.text}</p>
+                      <button class="close-notification" onclick="this.parentNode.remove()"><span class="material-symbols-outlined">
+                      close
+                      </span></button>
+                    `;
+                    document.getElementById('notification-area').appendChild(notification);
+                  }
+                html += `
+                        <div class="noteCard my-2 mx-2 card card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><center>Note ${index + 1} (Due Today!)</center></h5>
+                                <div class="note-text-container">
+                                <p class="card-text">${element.text}</p>
+                                </div>
+                                <br>
+                                <p class="card-text">Added On: ${element.timestamp}</p>
+                                ${reminderDateDisplay}
+                                <button id="${index}" onclick="deleteNote('${element.timestamp}')" class="btn btn-primary"><span class="material-symbols-outlined">
+                                delete
+                                </span></button>
+                                <button id="${index}" onclick="editNote('${element.timestamp}')" class="btn btn-secondary"><span class="material-symbols-outlined">
+                                edit</span></button>
+                            </div>
+                        </div>`;
+            } 
+            else{
+                html += `
+                <div class="noteCard my-2 mx-2 card card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><center>Note ${index + 1}</center></h5>
+                        <div class="note-text-container">
+                        <p class="card-text">${element.text}</p> 
+                        </div>
+                        <br>
+                        <p class="card-text">Added On: ${element.timestamp}</p>
+                        ${reminderDateDisplay}
+                        <button id="${index}" onclick="deleteNote('${element.timestamp}')" class="btn btn-primary"><span class="material-symbols-outlined">
+                        delete
+                        </span></button>
+                        <button id="${index}" onclick="editNote('${element.timestamp}')" class="btn btn-secondary"><span class="material-symbols-outlined">
+                        edit
+                        </span></button>
+                    </div>
+                </div>`;
+            }
     });
     let notesElm = document.getElementById("notes");
     if (latestNotes.length != 0) {
@@ -150,7 +166,13 @@ function showNotes() {
         notesElm.innerHTML = `Nothing to show! Use "Add a Note" section above to add notes.`;
     }
 }
-
+function showPopup(noteText) {
+    document.getElementById("popup-message").innerText = noteText;
+    document.getElementById("popup-container").style.display = "block";
+}
+document.querySelector(".close-popup1").addEventListener("click", () => {
+    document.getElementById("popup-container").style.display = "none";
+});
 function deleteNote(timestamp) {
     let notes = localStorage.getItem("notes");
     if (notes == null) {
@@ -175,7 +197,7 @@ search.addEventListener("input", function () {
     let noteCards = document.getElementsByClassName('noteCard');
     Array.from(noteCards).forEach(function (element) {
         let cardTxt = element.getElementsByTagName("p")[0].innerText;
-        let highlightedText = cardTxt.replace(new RegExp(inputVal, 'gi'), (match) => `<span style="background-color: #ffcab0;">${match}</span>`);
+        let highlightedText = cardTxt.replace(new RegExp(inputVal, 'gi'), (match) => `<span style="background-color: #848B52;">${match}</span>`);
         element.getElementsByTagName("p")[0].innerHTML = highlightedText;
 
         if (cardTxt.includes(inputVal)) {
@@ -195,7 +217,7 @@ let date = new Date(),
 
 const months = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
-const apiKey = "LXAwVXQtB6STqG4Vd9KL2KkRglsJMBt2";
+const apiKey = "3gshYBfMkvfbpAu39tKP2CcitPkYVJup";
 async function fetchHolidays(year, month) {
     const response = await fetch(`https://calendarific.com/api/v2/holidays?api_key=${apiKey}&country=IN&year=${year}&month=${month}`);
     const data = await response.json();

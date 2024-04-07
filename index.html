@@ -6,84 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Digi Memo</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cabin:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Reddit+Mono:wght@200..900&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <img src="https://gauriagarwal2602.github.io/Web-Tech/Logo1.jpg " alt="logo" id="logo">
-        <a class="navbar-brand" href="#" style="color: black; font-size: 35px;"><strong>Digi Memo</strong></a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control " id="searchTxt" type="search" placeholder="Search here" >
-            </form>
+    <nav>
+        <div class="head">
+            <img src="Logo1.jpg" alt="logo" id="logo">
+            <p class="title "><strong>Digi Memo</strong></p>
         </div>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control " id="searchTxt" type="search" placeholder="Search here">
+        </form>
     </nav>
-<div class="content">
-    <div class="left">
-        <div id="clock"></div>
-        <div class="cal">
-            
-        <div class="wrapper">
-            <header>
-              <p class="current-date"></p>
-              <div class="icons">
-                <span id="prev" class="material-symbols-rounded">chevron_left</span>
-                <span id="next" class="material-symbols-rounded">chevron_right</span>
-              </div>
-            </header>
-            <div class="calendar">
-              <ul class="weeks">
-                <li>Sun</li>
-                <li>Mon</li>
-                <li>Tue</li>
-                <li>Wed</li>
-                <li>Thu</li>
-                <li>Fri</li>
-                <li>Sat</li>
-              </ul>
-              <ul class="days"></ul>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="right">
-        <div class="container my-3">
-            <h3>Welcome To Digi Memo</h3>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Add a note</h5>
-                    <div class="form-group">
-                        <textarea class="form-control" id="addTxt" rows="5" placeholder="Type here..."></textarea>
-                        <label for="reminderDate">Reminder Date:</label>
-                        <input type="date" class="form-control" id="reminderDate">
+    <div id="notification-area"></div> <div class="content">
+        <!-- ... existing content ... -->
+      </div>
+    <div class="content">
+        <div class="left">
+            <div id="clock"></div>
+            <div class="cal">
+
+                <div class="wrapper">
+                    <header>
+                        <p class="current-date"></p>
+                        <div class="icons">
+                            <span id="prev" class="material-symbols-rounded">chevron_left</span>
+                            <span id="next" class="material-symbols-rounded">chevron_right</span>
+                        </div>
+                    </header>
+                    <div class="calendar">
+                        <ul class="weeks">
+                            <li>Sun</li>
+                            <li>Mon</li>
+                            <li>Tue</li>
+                            <li>Wed</li>
+                            <li>Thu</li>
+                            <li>Fri</li>
+                            <li>Sat</li>
+                        </ul>
+                        <ul class="days"></ul>
                     </div>
-                    <button class="btn btn-primary" onclick="addNote()" id="addBtn" ><span class="material-symbols-outlined">
-                        add
-                        </span> </button>
                 </div>
             </div>
-            <hr style="background-color: #4d4c4c; border: none; height: 2px;">
-            <h3>Your Notes :</h3>
-            <hr style="background-color: #4d4c4c; border: none; height: 2px;">
-            <div id="notes" class="row container-fluid"> </div>
         </div>
-    
+        <div class="right">
+            <div class="container my-3">
+                <h3>Welcome To Digi Memo</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add a note</h5>
+                        <div class="form-group">
+                            <textarea class="form-control" id="addTxt" rows="5" placeholder="Type here..."></textarea>
+                            <label for="reminderDate">Reminder Date:</label>
+                            <input type="date" class="form-control" id="reminderDate">
+                        </div>
+                        <button class="btn btn-primary" onclick="addNote()" id="addBtn"><span
+                                class="material-symbols-outlined">
+                                add
+                            </span> </button>
+                    </div>
+                </div>
+                <hr style="background-color: #4d4c4c; border: none; height: 2px;">
+                <h3>Your Notes :</h3>
+                <hr style="background-color: #4d4c4c; border: none; height: 2px;">
+                <div id="notes" class="row container-fluid"> </div>
+            </div>
+
+        </div>
     </div>
-</div>
-<div id="popup-container">
-    <div id="popup">
-      <p id="popup-message"></p>
-      <button class="close-popup1"><span class="material-symbols-outlined">close</span></button>
+    <div id="popup-container">
+        <div id="popup">
+            <p id="popup-message"></p>
+            <button class="close-popup1"><span class="material-symbols-outlined">close</span></button>
+        </div>
     </div>
-  </div>
-  
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
