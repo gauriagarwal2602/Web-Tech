@@ -196,7 +196,7 @@ nav{
   }
   .days li .holiday-name {
     position: absolute;
-    bottom: -20px; /* Adjust as needed */
+    bottom: -25px; /* Adjust as needed */
     left: 50%;
     transform: translateX(-50%);
     font-size: 0.8rem;
