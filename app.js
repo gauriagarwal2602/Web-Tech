@@ -24,14 +24,19 @@ function updateClock() {
     let addTxt = document.getElementById("addTxt");
     let notes = localStorage.getItem("notes");
     let timestamp = new Date().toLocaleString();
-    if (addTxt.value.trim() === "") {
-        return;
-    }
-
     if (notes == null) {
         notesObj = [];
     } else {
         notesObj = JSON.parse(notes);
+    }
+    if (addTxt.value.trim() === "") {
+        return;
+    }
+    const existingNote = notesObj.find(note => note.text.trim() === addTxt.value.trim());
+    if (existingNote) {
+        alert("This note already exists.");
+        addTxt.value = "";
+        return; 
     }
     let newNote = {
         text: addTxt.value,
