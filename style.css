@@ -4,12 +4,12 @@
 }
 nav{
     height: 10vh;
-    background-color: #ffcab0;
+    background-color: #A8C697;
     display: flex;
 
 }
 #logo{
-    height: 10vh;
+    height: 9vh;
 }
 #searchTxt{
     position: absolute;
@@ -36,18 +36,18 @@ nav{
     flex-direction: row;
 }
 .left{
-    width: 25vw;
+    width: 20vw;
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: #e0ffcd;
+    background-color: #878787;
 }
 .right{
-    width: 75vw;
+    width: 80vw;
     background-color: #fdffcd;
 }
 .container_clock{
-    padding: 5px;
+    /* padding: 5px; */
     position: relative;
     height: 17vw;
     width: 17vw;
@@ -225,3 +225,67 @@ nav{
   #clock {
     font-size: 5.5em;
   }
+  .note-text-container{
+    max-height: 100px;
+    overflow-y: auto;
+  }
+  #popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001; /* Ensure it's on top of other elements */
+  }
+  
+  #popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  .close-popup1 {
+    background-color: #A8C697;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0 0;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .popup {
+    position: fixed;
+    bottom: -10%;
+    left: 8%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+.close-popup {
+    background-color: #A8C697;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0 0;
+    border-radius: 5px;
+    cursor: pointer;
+}

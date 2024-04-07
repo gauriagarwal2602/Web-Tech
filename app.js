@@ -5,7 +5,6 @@ function updateClock() {
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
-
     const clockDisplay = `${hours}:${minutes}:${seconds}`;
     document.getElementById('clock').innerText = clockDisplay;
 }
@@ -14,7 +13,6 @@ function updateClockEverySecond() {
     updateClock();
     setInterval(updateClock, 1000);
 }
-
 updateClockEverySecond();
 let isEditing = false;
 function addNote() {
@@ -34,13 +32,15 @@ function addNote() {
         return;
     }
     if (notesObj.length >= 25) {
-        alert("You can only add up to 5 notes.");
+        document.getElementById("popup-message").innerText = "You can only add up to 25 notes.";
+        document.getElementById("popup-container").style.display = "block";
         addTxt.value = "";
         return;
     }
     const existingNote = notesObj.find(note => note.text.trim() === addTxt.value.trim());
     if (existingNote) {
-        alert("This note already exists.");
+        document.getElementById("popup-message").innerText = "This note already exists.";
+        document.getElementById("popup-container").style.display = "block";
         addTxt.value = "";
         return;
     }
@@ -68,7 +68,6 @@ function editNote(timestamp) {
         const { text } = notesObj[editIndex];
         document.getElementById("addTxt").value = text;
         document.getElementById("addBtn").innerHTML = `<span class="material-symbols-outlined">upgrade</span>`;
-        // innerText = "Save Changes";
         isEditing = true;
         document.getElementById("addBtn").addEventListener("click", function saveChanges() {
             const updatedText = document.getElementById("addTxt").value;
@@ -102,14 +101,17 @@ function showNotes() {
     });
     const latestNotes = notesObj.slice(0, 25);
     let html = "";
-    const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
+    const currentDate = new Date().toISOString().slice(0, 10);
     latestNotes.forEach(function (element, index) {
-        let reminderDateDisplay = element.reminderDate ? `<p class="card-text">Due On: ${element.reminderDate}</p>` : ""; // Display reminder date if available
+        let reminderDateDisplay = element.reminderDate ? `<p class="card-text">Due On: ${element.reminderDate}</p>` : ""; 
         html += `
                     <div class="noteCard my-2 mx-2 card card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title"><center>Note ${index + 1}</center></h5>
+                            <div class="note-text-container">
                             <p class="card-text">${element.text}</p> 
+                            </div>
+                            <br>
                             <p class="card-text">Added On: ${element.timestamp}</p>
                             ${reminderDateDisplay}
                             <button id="${index}" onclick="deleteNote('${element.timestamp}')" class="btn btn-primary"><span class="material-symbols-outlined">
@@ -121,8 +123,25 @@ function showNotes() {
                         </div>
                     </div>`;
             if (element.reminderDate === currentDate) {
-                alert(`Reminder: ${element.text}`);
+                const popup = document.createElement('div');
+            popup.classList.add('popup');
+            popup.innerHTML = `
+                <p>Reminder:</p>
+                <p>${element.text}</p>
+                <button class="close-popup"><span class="material-symbols-outlined">
+                close
+                </span></button>
+            `;
+            document.body.appendChild(popup);
+            const closeButtons = document.querySelectorAll('.close-popup1');
+            closeButtons.forEach(closeButton => {
+            closeButton.addEventListener('click', () => {
+            closeButton.parentElement.style.display = 'none';
+            location. reload()
+        });
+    });
            }
+
     });
     let notesElm = document.getElementById("notes");
     if (latestNotes.length != 0) {
@@ -224,13 +243,11 @@ daysTag.addEventListener("mouseover", (event) => {
     const element = event.target;
     if (element.classList.contains("holiday")) {
         const holidayName = element.dataset.holiday;
-        // Display holidayName in a text box or tooltip
         console.log("Holiday:", holidayName);
     }
 });
 
 daysTag.addEventListener("mouseout", (event) => {
-    // Hide the text box or tooltip
 });
 prevNextIcon.forEach(icon => {
     icon.addEventListener("click", () => {

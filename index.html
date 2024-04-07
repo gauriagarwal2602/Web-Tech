@@ -16,7 +16,7 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <img src="https://gauriagarwal2602.github.io/Web-Tech/Logo.jpg " alt="logo" id="logo">
+        <img src="Logo1.jpg" alt="logo" id="logo">
         <a class="navbar-brand" href="#" style="color: black; font-size: 35px;"><strong>Digi Memo</strong></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -61,6 +61,8 @@
                     <h5 class="card-title">Add a note</h5>
                     <div class="form-group">
                         <textarea class="form-control" id="addTxt" rows="5" placeholder="Type here..."></textarea>
+                        <label for="reminderDate">Reminder Date:</label>
+                        <input type="date" class="form-control" id="reminderDate">
                     </div>
                     <button class="btn btn-primary" onclick="addNote()" id="addBtn" ><span class="material-symbols-outlined">
                         add
@@ -75,7 +77,13 @@
     
     </div>
 </div>
-
+<div id="popup-container">
+    <div id="popup">
+      <p id="popup-message"></p>
+      <button class="close-popup1"><span class="material-symbols-outlined">close</span></button>
+    </div>
+  </div>
+  
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
