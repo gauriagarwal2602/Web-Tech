@@ -217,7 +217,7 @@ let date = new Date(),
 
 const months = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
-const apiKey = "3gshYBfMkvfbpAu39tKP2CcitPkYVJup";
+const apiKey = "R5xfXCu9GdFANz0x3hmyC00uW7z9CiwY";
 async function fetchHolidays(year, month) {
     const response = await fetch(`https://calendarific.com/api/v2/holidays?api_key=${apiKey}&country=IN&year=${year}&month=${month}`);
     const data = await response.json();

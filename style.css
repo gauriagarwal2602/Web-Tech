@@ -5,8 +5,22 @@
     font-weight: 400;
     font-style: normal;
 }
+.navigation {
+  display: flex; /* Ensure the list items are arranged in a line */
+}
+
+.navelements {
+  padding: 10px;
+  text-decoration: none;
+  display: inline-block; /* Change to inline-block for proper alignment */
+  color: #454839; /* Set text color to green */
+  cursor: pointer;
+}
+
+.navelements a {
+  color: white; /* Ensure links also have green color */
+}
 nav {
-  height: 10vh;
   background-color: #454839;
   display:flex;
   justify-content: space-between; 
@@ -304,13 +318,16 @@ nav {
     cursor: pointer;
 }
 .notification {
-  background-color: #B9CBB9;
-  border: 1px solid #c3e6cb;
+  background-color: #636946;
+  border: 1px solid #636946;
+  border-radius: 2px;
   padding: 10px;
-  position: relative; /* For positioning close button */
+  position: relative;
+  color: white;
 }
 
 .close-notification {
+  color: white;
   position: absolute;
   top: 5px;
   right: 5px;
